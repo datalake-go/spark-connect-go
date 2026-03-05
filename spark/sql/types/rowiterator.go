@@ -49,16 +49,13 @@ func NewRowSequence(ctx context.Context, recordSeq iter.Seq2[arrow.Record, error
 				return
 			}
 			if rec == nil {
-				_ = yield(nil, errors.New("expected arrow.Record to contain non-nil Rows, got nil"))
+				_ = yield(nil, errors.New("expected non-nil arrow.Record, got nil"))
 				return
 			}
 
 			for row, err := range rowIterFromRecord(rec) {
-				if err != nil {
-					_ = yield(nil, err)
-					return
-				}
-				if !yield(row, nil) {
+				cont := yield(row, err)
+				if err != nil || !cont {
 					return
 				}
 			}

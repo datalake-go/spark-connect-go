@@ -320,7 +320,7 @@ func TestRowIterator_NilRecordReturnsError(t *testing.T) {
 
 	// Should have received error about nil record
 	assert.Error(t, gotError)
-	assert.Contains(t, gotError.Error(), "expected arrow.Record to contain non-nil Rows, got nil")
+	assert.Contains(t, gotError.Error(), "expected non-nil arrow.Record, got nil")
 }
 
 func TestRowSeq2_DirectUsage(t *testing.T) {
